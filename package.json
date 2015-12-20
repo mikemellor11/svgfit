@@ -1,0 +1,34 @@
+{
+  "name": "svgfit",
+  "description": "Stand alone, renders then saves svg files to their exact bounds",
+  "version": "0.1.0",
+  "homepage": "",
+  "author": {
+    "name": "Michael Mellor",
+    "email": "mikemellor11@hotmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "bugs": {
+    "url": ""
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+  },
+  "dependencies": {
+    "phantomjs": "~1.9.13"
+  },
+  "devDependencies": {
+  },
+  "keywords": []
+}
