@@ -23,13 +23,11 @@
   "engines": {
     "node": ">= 0.8.0"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "dependencies": {
-    "phantomjs": "~1.9.13"
+    "phantomjs": "^2.1.7"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "keywords": [],
   "main": "./lib/svgfit"
 }
