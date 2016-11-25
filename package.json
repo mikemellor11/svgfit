@@ -1,7 +1,7 @@
 {
   "name": "svgfit",
   "description": "Stand alone, renders then saves svg files to their exact bounds",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "homepage": "https://github.com/mikemellor11/svgfit",
   "author": {
     "name": "Michael Mellor",
