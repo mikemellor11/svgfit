@@ -23,11 +23,15 @@
   "engines": {
     "node": ">= 0.8.0"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "mocha"
+  },
   "dependencies": {
     "phantomjs": "^2.1.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "3.2.0"
+  },
   "keywords": [],
   "main": "./lib/svgfit"
 }
