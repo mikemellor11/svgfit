@@ -1,7 +1,7 @@
 {
   "name": "svgfit",
   "description": "Stand alone, renders then saves svg files to their exact bounds",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "homepage": "https://github.com/mikemellor11/svgfit",
   "author": {
     "name": "Michael Mellor",
@@ -26,12 +26,12 @@
   "scripts": {
     "test": "mocha"
   },
-  "dependencies": {
-    "phantomjs-prebuilt": "^2.1.7"
-  },
   "devDependencies": {
     "mocha": "3.2.0"
   },
   "keywords": [],
-  "main": "./lib/svgfit"
+  "main": "./lib/svgfit",
+  "dependencies": {
+    "phantomjs-prebuilt": "2.1.15"
+  }
 }
