@@ -30,5 +30,5 @@
     "mocha": "^10.2.0"
   },
   "keywords": [],
-  "main": "./lib/svgfit"
+  "main": "index.js"
 }
