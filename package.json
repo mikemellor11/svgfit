@@ -27,7 +27,7 @@
     "test": "mocha"
   },
   "devDependencies": {
-    "mocha": "3.2.0"
+    "mocha": "^10.2.0"
   },
   "keywords": [],
   "main": "./lib/svgfit",
