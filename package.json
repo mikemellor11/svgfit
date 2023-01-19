@@ -14,12 +14,7 @@
   "bugs": {
     "url": "https://github.com/mikemellor11/svgfit/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "/blob/master/LICENSE-MIT"
-    }
-  ],
+  "license": "MIT",
   "engines": {
     "node": ">= 16"
   },
