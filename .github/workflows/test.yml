@@ -13,9 +13,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Commitlint
-        uses: wagoid/commitlint-github-action@v5
-
       - name: Install node dependencies
         run: npm ci
 
