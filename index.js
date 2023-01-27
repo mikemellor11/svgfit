@@ -2,7 +2,7 @@ import fs from "fs-extra";
 import puppeteer from "puppeteer-core";
 import path from "path";
 
-export async function fit(src, dest, options = { silent: false }){
+export async function fit(srcs, dests, options = { silent: false }){
     let opts = Object.assign({
         puppeteer: {
             args: ['--headless', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'],
@@ -10,27 +10,36 @@ export async function fit(src, dest, options = { silent: false }){
         }
     }, options);
 
+    srcs = Array.isArray(srcs) ? srcs : [srcs];
+    dests = Array.isArray(dests) ? dests : [dests];
     let inputs;
 
-    if(fs.existsSync(src)){
-        if(fs.lstatSync(src).isDirectory()){
-            inputs = fs.readdirSync(src).map(src => {src});
-        } else {
-            inputs = [{src}];
+    inputs = srcs.reduce((concat, src, i) => {
+        let arr;
+
+        if(fs.existsSync(src)){
+            if(fs.lstatSync(src).isDirectory()){
+                arr = fs.readdirSync(src).map(d => ({src: `${src}/${d}`}));
+            } else {
+                arr = [{src}];
+            }
         }
-    }
 
-    let destIsFile = path.extname(dest) === '.svg';
-    let destPath = destIsFile ? path.dirname(dest) : dest;
+        let dest = dests[i % dests.length];
+        let destIsFile = path.extname(dest) === '.svg';
+        let destPath = destIsFile ? path.dirname(dest) : dest;
 
-    fs.mkdirpSync(destPath);
+        fs.mkdirpSync(destPath);
 
-    inputs = inputs.map(input => {
-        return {
-            src: input.src,
-            dest: destIsFile ? destPath : `${destPath}/${path.basename(input.src)}`
-        };
-    });
+        arr = arr.map(input => {
+            return {
+                src: input.src,
+                dest: destIsFile ? dest : `${destPath}/${path.basename(input.src)}`
+            };
+        });
+
+        return concat.concat(arr);
+    }, []);
 
     const browser = await puppeteer.launch({
         executablePath: opts.puppeteer.executablePath,
@@ -65,7 +74,7 @@ export async function fit(src, dest, options = { silent: false }){
             fs.writeFileSync(`${input.dest}`, result);
 
             if(!opts.silent){
-                console.log(`${input.src} fitted.`);
+                console.log(`\x1b[32m%s\x1b[0m`, `✔`, `${input.src} fitted.`);
             }
         }
     } catch(e){console.log(e);}
