@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/mikemellor11/svgfit/compare/v2.1.0...v2.1.1) (2023-01-27)
+
+
+### Bug Fixes
+
+* trigger patch build ([85531d7](https://github.com/mikemellor11/svgfit/commit/85531d75a1fb238e5bb9eedd5e105c135895ec46))
+
 ## [2.1.0](https://github.com/mikemellor11/svgfit/compare/v2.0.0...v2.1.0) (2023-01-27)
 
 
