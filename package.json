@@ -29,6 +29,12 @@
     "husky": "^8.0.3",
     "mocha": "^10.2.0"
   },
+  "files": [
+    "index.js",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
   "keywords": [],
   "main": "index.js",
   "dependencies": {
