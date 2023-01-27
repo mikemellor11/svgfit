@@ -53,31 +53,37 @@ describe('svgfit', function() {
 		assert.equal(fs.readFileSync('test/actual/search3.svg', 'utf-8'), expected.circle);
 	});
 
-	// it('should throw error if anything other than an array or string passed to input', function() {
-	// 	assert.throws(function(){ svg.fit(10, 'test/actual') }, Error);
-	// });
+	it('should throw error if anything other than an array or string passed to input', async function() {
+		await svg.fit(10, 'test/actual').then(() => assert.fail("wasn't supposed to succeed"), (e) => assert.equal(e.message, "src must be an array or a string."))
+	});
 
-	// it('should throw error if anything other than an array or string passed to output', function() {
-	// 	assert.throws(function(){ svg.fit('lib', 10) }, Error);
-	// });
+	it('should throw error if anything other than an array or string passed to output', async function() {
+		await svg.fit('lib', 10).then(() => assert.fail("wasn't supposed to succeed"), (e) => assert.equal(e.message, "dest must be an array or a string."))
+	});
 
-	// it('should throw error if a folder specified and not all files are svgs', function() {
-	// 	assert.throws(function(){ svg.fit('lib', 'test/actual') }, Error);
-	// });
+	it('should throw error if a folder specified and not all files are svgs', async function() {
+		await svg.fit('test', 'test/actual').then(() => assert.fail("wasn't supposed to succeed"), (e) => assert.equal(e.message, "some srcs are non svg files."))
+	});
 
-	// it('should throw error if a file is specified and is not an svg', function() {
-	// 	assert.throws(function(){ svg.fit('package.json', 'test/actual') }, Error);
-	// });
+	it('should throw error if a file is specified and is not an svg', async function() {
+		await svg.fit('package.json', 'test/actual').then(() => assert.fail("wasn't supposed to succeed"), (e) => assert.equal(e.message, "some srcs are non svg files."))
+	});
 
-	// it('should throw error if outputs count is longer than inputs', function() {
-	// 	assert.throws(function(){ svg.fit(['svg/search.svg', 'svg/search2.svg'], ['svg/search.svg', 'svg/search2.svg', 'svg/search3.svg']) }, Error);
-	// });
+	it('should throw error if outputs count is longer than inputs', async function() {
+		await svg.fit(['svg/search.svg', 'svg/circle.svg'], ['svg/search.svg', 'svg/search2.svg', 'svg/search3.svg']).then(() => assert.fail("wasn't supposed to succeed"), (e) => assert.equal(e.message, "uneven number of src and dest files."))
+	});
 
-	// it('should throw error if outputs count is less than inputs', function() {
-	// 	assert.throws(function(){ svg.fit(['svg/search.svg', 'svg/search2.svg'], ['svg/search.svg']) }, Error);
-	// });
+	it('should throw error if outputs count is less than inputs', async function() {
+		await svg.fit(['svg/search.svg', 'svg/circle.svg'], ['svg/search.svg']).then(() => assert.fail("wasn't supposed to succeed"), (e) => assert.equal(e.message, "uneven number of src and dest files."))
+	});
 
-	// it('should throw error if outputs has a file extension that is not svg', function() {
-	// 	assert.throws(function(){ svg.fit(['svg/search.svg', 'svg/search2.svg'], ['svg/search.svg', 'svg/search2.txt']) }, Error);
-	// });
+	it('should throw error if outputs has a file extension that is not svg', async function() {
+		await svg.fit(['svg/search.svg', 'svg/circle.svg'], ['svg/search.svg', 'svg/circle.txt']).then(() => assert.fail("wasn't supposed to succeed"), (e) => assert.equal(e.message, "some dest files have a non svg extension."))
+	});
+
+	// Test a file & a folder src
+	// Test a file & a folder dest
+	// Test a missing folder
+	// Test a missing file
+	// Test nested svgs
 });
