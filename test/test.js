@@ -1,6 +1,6 @@
 import assert from 'assert';
 import svg from '../index.js';
-import fs from 'fs';
+import fs from 'fs-extra';
 
 describe('svgfit', function() {
 	var expected;
@@ -10,6 +10,8 @@ describe('svgfit', function() {
 			circle: fs.readFileSync('test/expected/circle.svg', 'utf-8'),
 			search: fs.readFileSync('test/expected/search.svg', 'utf-8')
 		};
+
+		fs.rmSync('test/actual', {recursive: true, force: true});
 	});
 
 	it('should render svg to its exact bounds', async function() {
