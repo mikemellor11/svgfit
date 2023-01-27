@@ -1,5 +1,5 @@
 import fs from "fs-extra";
-import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer";
 import path from "path";
 
 export async function fit(srcs, dests, options = { silent: false }){
@@ -13,8 +13,7 @@ export async function fit(srcs, dests, options = { silent: false }){
 
     let opts = Object.assign({
         puppeteer: {
-            args: ['--headless', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'],
-            executablePath: "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+            args: ['--headless', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage']
         }
     }, options);
 
