@@ -12,11 +12,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Merge production -> development
+      - name: Merge master -> development
         uses: devmasx/merge-branch@v1.4.0
         with:
           type: now
-          from_branch: production
+          from_branch: master
           target_branch: development
           github_token: ${{ github.token }}
   publish:
