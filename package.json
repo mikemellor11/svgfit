@@ -23,6 +23,7 @@
     "test": "mocha --timeout=240s --exit"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.4.2",
     "mocha": "^10.2.0"
   },
   "keywords": [],
