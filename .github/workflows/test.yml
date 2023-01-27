@@ -1,0 +1,23 @@
+name: test
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  test:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Commitlint
+        uses: wagoid/commitlint-github-action@v5
+
+      - name: Install node dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test

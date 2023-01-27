@@ -1,0 +1,21 @@
+name: post-release
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  sync-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Merge production -> development
+        uses: devmasx/merge-branch@v1.4.0
+        with:
+          type: now
+          from_branch: production
+          target_branch: development
+          github_token: ${{ github.token }}

@@ -1,0 +1,17 @@
+name: release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        with:
+          release-type: node
+          package-name: release-please-action
+          token: ${{ secrets.PLEASE_RELEASE }}
+          changelog-types: '[{"type": "feat", "section": "Features"},{"type": "fix", "section": "Bug Fixes"},{"type": "perf", "section": "Performance improvements"}]'
