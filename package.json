@@ -20,7 +20,8 @@
     "node": ">= 16"
   },
   "scripts": {
-    "test": "mocha --timeout=240s --exit"
+    "test": "mocha --timeout=240s --exit",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
