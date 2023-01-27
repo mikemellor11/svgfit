@@ -20,7 +20,7 @@
     "node": ">= 16"
   },
   "scripts": {
-    "test": "mocha --timeout=240s"
+    "test": "mocha --timeout=240s --exit"
   },
   "devDependencies": {
     "mocha": "^10.2.0"
