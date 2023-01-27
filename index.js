@@ -3,6 +3,14 @@ import puppeteer from "puppeteer-core";
 import path from "path";
 
 export async function fit(srcs, dests, options = { silent: false }){
+    if(typeof srcs !== 'string' && !Array.isArray(srcs)){
+        throw new Error('src must be an array or a string.');
+    }
+
+    if(typeof dests !== 'string' && !Array.isArray(dests)){
+        throw new Error('dest must be an array or a string.');
+    }
+
     let opts = Object.assign({
         puppeteer: {
             args: ['--headless', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'],
@@ -12,34 +20,51 @@ export async function fit(srcs, dests, options = { silent: false }){
 
     srcs = Array.isArray(srcs) ? srcs : [srcs];
     dests = Array.isArray(dests) ? dests : [dests];
+
+    if(srcs.length !== dests.length && dests.find(d => path.extname(d) === '.svg')){
+        throw new Error('uneven number of src and dest files.');
+    }
+
     let inputs;
 
-    inputs = srcs.reduce((concat, src, i) => {
-        let arr;
+    try{
+        inputs = srcs.reduce((concat, src, i) => {
+            let arr = [];
 
-        if(fs.existsSync(src)){
-            if(fs.lstatSync(src).isDirectory()){
-                arr = fs.readdirSync(src).map(d => ({src: `${src}/${d}`}));
-            } else {
-                arr = [{src}];
+            if(fs.existsSync(src)){
+                if(fs.lstatSync(src).isDirectory()){
+                    arr = fs.readdirSync(src).map(d => ({src: `${src}/${d}`}));
+                } else {
+                    arr = [{src}];
+                }
             }
+
+            let dest = dests[i % dests.length];
+            let destIsFile = path.extname(dest) !== '';
+            let destPath = destIsFile ? path.dirname(dest) : dest;
+
+            fs.mkdirpSync(destPath);
+
+            arr = arr.map(input => {
+                return {
+                    src: input.src,
+                    dest: destIsFile ? dest : `${destPath}/${path.basename(input.src)}`
+                };
+            });
+
+            return concat.concat(arr);
+        }, []);
+    } catch(e){console.log(e);}
+
+    inputs.forEach(d => {
+        if(path.extname(d.src) !== '.svg'){
+            throw new Error('some srcs are non svg files.');
         }
 
-        let dest = dests[i % dests.length];
-        let destIsFile = path.extname(dest) === '.svg';
-        let destPath = destIsFile ? path.dirname(dest) : dest;
-
-        fs.mkdirpSync(destPath);
-
-        arr = arr.map(input => {
-            return {
-                src: input.src,
-                dest: destIsFile ? dest : `${destPath}/${path.basename(input.src)}`
-            };
-        });
-
-        return concat.concat(arr);
-    }, []);
+        if(path.extname(d.dest) !== '.svg'){
+            throw new Error('some dest files have a non svg extension.');
+        }
+    });
 
     const browser = await puppeteer.launch({
         executablePath: opts.puppeteer.executablePath,
