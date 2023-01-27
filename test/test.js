@@ -15,71 +15,43 @@ describe('svgfit', function() {
 	});
 
 	it('should render svg to its exact bounds', async function() {
-		await svg.fit('svg/search.svg', 'test/actual');
+		await svg.fit('svg/search.svg', 'test/actual', {silent: true});
 
 		assert.equal(fs.readFileSync('test/actual/search.svg', 'utf-8'), expected.search);
 	});
 
 	it('should render svg to its exact bounds without width and height if not set on original svg', async function() {
-		await svg.fit('svg/circle.svg', 'test/actual');
+		await svg.fit('svg/circle.svg', 'test/actual', {silent: true});
 
 		assert.equal(fs.readFileSync('test/actual/circle.svg', 'utf-8'), expected.circle);
 	});
 
-	// it('should render svg to its exact bounds and export to specified location', function(done) {
-	// 	svg.fit('svg/search.svg', 'test/actual/search3.svg').then(function(){
-	// 		assert.equal(
-	// 			fs.readFileSync('test/actual/search3.svg', 'utf-8'), 
-	// 			expected
-	// 		);
-	// 		done();
-	// 	});
-	// });
+	it('should render svg to its exact bounds and export to specified location', async function() {
+		await svg.fit('svg/search.svg', 'test/actual/search3.svg', {silent: true});
 
-	// it('should be able to point to folder of svgs', function(done) {
-	// 	svg.fit('svg', 'test/actual').then(function(){
-	// 		assert.equal(
-	// 			fs.readFileSync('test/actual/search.svg', 'utf-8'), 
-	// 			expected
-	// 		);
+		assert.equal(fs.readFileSync('test/actual/search3.svg', 'utf-8'), expected.search);
+	});
 
-	// 		assert.equal(
-	// 			fs.readFileSync('test/actual/search2.svg', 'utf-8'), 
-	// 			expected
-	// 		);
-	// 		done();
-	// 	});
-	// });
+	it('should be able to point to folder of svgs', async function() {
+		await svg.fit('svg', 'test/actual', {silent: true});
 
-	// it('should be able to handle an array of svgs', function(done) {
-	// 	svg.fit(['svg/search.svg', 'svg/search2.svg'], 'test/actual').then(function(){
-	// 		assert.equal(
-	// 			fs.readFileSync('test/actual/search.svg', 'utf-8'), 
-	// 			expected
-	// 		);
+		assert.equal(fs.readFileSync('test/actual/search.svg', 'utf-8'), expected.search);
+		assert.equal(fs.readFileSync('test/actual/circle.svg', 'utf-8'), expected.circle);
+	});
 
-	// 		assert.equal(
-	// 			fs.readFileSync('test/actual/search2.svg', 'utf-8'), 
-	// 			expected
-	// 		);
-	// 		done();
-	// 	});
-	// });
+	it('should be able to handle an array of svgs', async function() {
+		await svg.fit(['svg/search.svg', 'svg/circle.svg'], 'test/actual', {silent: true});
 
-	// it('should be able to handle an array of svgs and an array of outputs', function(done) {
-	// 	svg.fit(['svg/search.svg', 'svg/search2.svg'], ['test/actual/search.svg', 'test/actual/search3.svg']).then(function(){
-	// 		assert.equal(
-	// 			fs.readFileSync('test/actual/search.svg', 'utf-8'), 
-	// 			expected
-	// 		);
+		assert.equal(fs.readFileSync('test/actual/search.svg', 'utf-8'), expected.search);
+		assert.equal(fs.readFileSync('test/actual/circle.svg', 'utf-8'), expected.circle);
+	});
 
-	// 		assert.equal(
-	// 			fs.readFileSync('test/actual/search3.svg', 'utf-8'), 
-	// 			expected
-	// 		);
-	// 		done();
-	// 	});
-	// });
+	it('should be able to handle an array of svgs and an array of outputs', async function() {
+		await svg.fit(['svg/search.svg', 'svg/circle.svg'], ['test/actual/search.svg', 'test/actual/search3.svg'], {silent: true});
+
+		assert.equal(fs.readFileSync('test/actual/search.svg', 'utf-8'), expected.search);
+		assert.equal(fs.readFileSync('test/actual/search3.svg', 'utf-8'), expected.circle);
+	});
 
 	// it('should throw error if anything other than an array or string passed to input', function() {
 	// 	assert.throws(function(){ svg.fit(10, 'test/actual') }, Error);
